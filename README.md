@@ -26,6 +26,7 @@ sudo apt upgrade
 
 ## 4. Configure network devices
 * [Guide](https://github.com/pokusew/ros-setup/blob/main/nvidia-jetson-tx2/NETWORK.md#setup)
+* **&#9432;** In section 1.c change the ipv4.address to 192.168.<random number from 0-255>.1/24
 
 ## 5. Setup Docker environment
 To use ROS2 Humble we need to set up a Docker image with Ubuntu 22.04 LTS
@@ -33,3 +34,4 @@ To use ROS2 Humble we need to set up a Docker image with Ubuntu 22.04 LTS
 sudo usermod -a -G docker nvidia
 sudo reboot
 ```
+* `docker run --rm -it --network=host -h tx2-ros2 --name tx2-ros2 ctu-iig/tx2-ros2-docker:latest bash` (just temporal)
