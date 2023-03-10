@@ -34,4 +34,6 @@ To use ROS2 Humble we need to set up a Docker image with Ubuntu 22.04 LTS
 sudo usermod -a -G docker nvidia
 sudo reboot
 ```
-* `docker run --rm -it --network=host -h tx2-ros2 --name tx2-ros2 ctu-iig/tx2-ros2-docker:latest bash` (just temporal)
+**TODO**
+* `docker run --rm -it --network=host -h tx2-ros2-docker --name tx2-ros2 ctu-iig/tx2-ros2-docker:latest bash` (just temporal)
+* ssh port: 2233
