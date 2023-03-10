@@ -56,7 +56,6 @@ RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/s
 RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
 RUN sed -i 's/\(^Port\)/#\1/' /etc/ssh/sshd_config && echo Port 2233 >> /etc/ssh/sshd_config
 EXPOSE 2233
-CMD ["/usr/sbin/sshd", "-D"]
 
 
 RUN useradd --create-home --shell /bin/bash nvidia && echo "nvidia:nvidia" | chpasswd && adduser nvidia sudo
@@ -64,3 +63,6 @@ RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 # RUN usermod -aG sudo nvidia
 USER nvidia
 WORKDIR /home/nvidia
+
+
+CMD ["sudo", "/usr/sbin/sshd", "-D"]
