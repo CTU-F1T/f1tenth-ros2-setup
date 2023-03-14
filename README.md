@@ -34,6 +34,40 @@ To use ROS2 Humble we need to set up a Docker image with Ubuntu 22.04 LTS
 sudo usermod -a -G docker nvidia
 sudo reboot
 ```
-**TODO**
-* `docker run --rm -it --network=host -h tx2-ros2-docker --name tx2-ros2 ctu-iig/tx2-ros2-docker:latest bash` (just temporal)
-* ssh port: 2233
+
+* You need to build the docker image on the car, so there is no problem with the system version
+* First, clone this git repo to the car and run available scripts
+    ```bash
+    git clone git@github.com:cihlami1/f1tenth-ros2-setup.git
+    cd f1tenth-ros2-setup/docker_img_linux_cfg
+    ./build.sh
+    ```
+* This will take a while, because we need to install all of ROS 2 Humble packages
+* Download [f1tenth rewrite](https://github.com/pokusew/f1tenth-rewrite) repo to the car's home and rename it to `f1tenth`
+    ```bash
+        git clone https://github.com/pokusew/f1tenth-rewrite.git
+        mv f1tenth-rewrite f1tenth
+    ````
+* After the build, you need to start a docker container
+* **You have to connect all the devices (vesc, imu, teensy) before running the script, otherwise the container won't start**
+* Then just run the start script
+    ```bash
+    ./start_container.sh
+    ```
+* Now the docker container should be running
+* **Never remove the container or all your data will be lost**
+
+## 6. Connect to f1tenth car via ssh
+* Now, when everything should be ready and you should be able to connect to the f1tenth car's docker container via ssh from your personal computer
+* The docker container uses **port 2233** for ssh connection
+* Connect to the wifi created by the car and run
+    ```bash
+    ssh -p 2233 nvidia@<ip-addr-of-car> # put here the IP address that you selected when seting up the device in section 4
+    ```
+* Or you can create/edit `~/.ssh/config` file on your personal computer
+    ```bash
+    Host <choose-name>
+        HostName <ip-addr-of-car>
+        User nvidia
+        Port 2233
+    ```

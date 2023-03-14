@@ -22,9 +22,9 @@ RUN sudo chgrp -R nvidia ~/.tmuxinator/
 
 # RUN sudo service ssh start
 
-RUN echo 'if command -v tmuxinator start car &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then' >> ~/.bashrc
-RUN echo "\texec tmuxinator start car" >> ~/.bashrc
-RUN echo 'fi' >> ~/.bashrc
+# RUN echo 'if command -v tmuxinator start car &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then' >> ~/.bashrc
+# RUN echo "\texec tmuxinator start car" >> ~/.bashrc
+# RUN echo 'fi' >> ~/.bashrc
 
 CMD ["sudo", "/usr/sbin/sshd", "-D"]
 # CMD ["tmuxinator", "start", "car"]
