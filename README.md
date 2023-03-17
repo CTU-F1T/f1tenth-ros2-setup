@@ -125,7 +125,7 @@ docker exec -it <container-name> bash   # run docker environment (if ssh access 
     ```
     and then simply run `ssh <choosen-name>`
 
-## 8. Setup f1tenth workspace
+## 8. Setup f1tenth workspace in the car's Docker container
 * **Never build f1tenth ws in a terminal with sourced `f1tenth/install/source.bash`**, always use a separate window
 ```bash
 cd ~/f1tenth
@@ -141,7 +141,7 @@ rosdep install -i --from-paths src -y --skip-keys="Stage slam_toolbox cartograph
 # Because we do not use it now, we can afford to skip is build for now.
 colcon build --symlink-install --mixin compile-commands --packages-ignore vesc_ackermann
 ```
-* For multiple terminal windows, you can use [tmux]
+* For multiple terminal windows, you can use [tmux](https://github.com/tmux/tmux/wiki)
 * Everything is already preconfigured, you can use the following command to start/attach to car's tmux session:
     ```bash
     tmux-car
