@@ -28,7 +28,47 @@ sudo apt upgrade
 * [Guide](https://github.com/pokusew/ros-setup/blob/main/nvidia-jetson-tx2/NETWORK.md#setup)
 * **&#9432;** In section 1.c change the ipv4.address to 192.168.<random number from 0-255>.1/24
 
-## 5. Setup Docker environment
+## 5. Create bootable SD card
+* Format your SD card to `ext4` format
+* Insert SD card to the NVIDIA Jetson and start the car
+* Check if the SD card is recognized by running `lsblk`
+* Device names:
+    * `mmcblk0` = internal eMMC
+    * **`mmcblk2` = SD card (as enumerated on JetPack 4.5.x)**
+    * `mmcblk1` = SD card (as enumerated on JetPack 3.x)
+
+* Mount the device - notice the mmcblk2**p1** suffix
+    ```bash
+    sudo mkdir /media/sdcard
+    sudo mount /dev/mmcblk2p1 /media/sdcard
+    ```
+* Clean everything on the card (maybe there will be `lost+found` dir) and then copy the contents of the root directory to the SD card (this will take several minutes)
+    ```bash
+    rm -rf /media/sdcard/*
+    sudo nohup cp -ax / /media/sdcard
+    ```
+    `nohup` will ensure, that the process won't be killed if your SSH connection crashes. In that case, you can reconnect and find the output of your command in `nohup.out`.
+
+* Now reconfigure the boot config on the SD card
+    ```bash
+    cd /media/sdcard/boot/extlinux
+    sudo cp extlinux.conf extlinux.conf.original
+    sudo cp <your-path>/f1tenth-ros-setup/extlinux.conf /media/sdcard/boot/extlinux/extlinux.conf
+    ```
+* Reboot the system 
+    ```bash
+    sudo reboot
+    ```
+* After the reboot, the system should automatically boot from the SD card - you can verify it by running `df -h`
+* You should see something like this
+    ```
+    nvidia@tx2-ros2:~$ df -h
+    Filesystem      Size  Used Avail Use% Mounted on
+    /dev/mmcblk2p1  117G   22G   90G  20% /
+    ...
+    ```
+
+## 6. Setup Docker environment
 To use ROS2 Humble we need to set up a Docker image with Ubuntu 22.04 LTS
 ```bash
 sudo usermod -a -G docker nvidia
@@ -69,7 +109,7 @@ docker exec -it <container-name> bash   # run docker environment (if ssh access 
 ```
 
 
-## 6. Connect to f1tenth car via ssh
+## 7. Connect to f1tenth car via ssh
 * Now, when everything should be ready and you should be able to connect to the f1tenth car's docker container via ssh from your personal computer
 * The docker container uses **port 2233** for ssh connection
 * Connect to the wifi created by the car and run
