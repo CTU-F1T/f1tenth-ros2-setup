@@ -1,7 +1,7 @@
 # /home/cihlami1/.tmuxinator/car.yml
 
 name: car
-root: ~/
+root: ~/f1tenth/
 
 # Optional tmux socket
 # socket_name: foo
@@ -45,5 +45,8 @@ windows:
       # Synchronize all panes of this window, can be enabled before or after the pane commands run.
       # 'before' represents legacy functionality and will be deprecated in a future release, in favour of 'after'
       # synchronize: after
-  - workspace:
+  - build:
+    - echo 'Use for build of f1tenth ws, but DO NOT source it here'
+
+  - run:
     - source ~/f1tenth/install/setup.bash; cd ~/f1tenth/src/

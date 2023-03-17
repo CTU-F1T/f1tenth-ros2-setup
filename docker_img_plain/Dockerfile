@@ -71,7 +71,7 @@ RUN sed -i 's/\(^Port\)/#\1/' /etc/ssh/sshd_config && echo Port 2233 >> /etc/ssh
 EXPOSE 2233
 
 
-RUN useradd --create-home --shell /bin/bash nvidia && echo "nvidia:nvidia" | chpasswd && adduser nvidia sudo
+RUN useradd --create-home --shell /bin/bash nvidia && echo "nvidia:nvidia" | chpasswd && adduser nvidia sudo && adduser nvidia dialout
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 # RUN usermod -aG sudo nvidia
 

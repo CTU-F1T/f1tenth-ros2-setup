@@ -143,3 +143,6 @@ alias sl='source install/setup_local.bash'
 alias s='source install/setup.bash'
 alias ws-clean='rm -rf build/ install/ log/'
 alias ws-build='colcon build --symlink-install --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=1'
+alias tmux-car='tmuxinator start car'
+
+source /opt/ros/humble/setup.bash

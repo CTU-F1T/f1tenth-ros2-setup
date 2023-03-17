@@ -126,4 +126,38 @@ docker exec -it <container-name> bash   # run docker environment (if ssh access 
     and then simply run `ssh <choosen-name>`
 
 ## 8. Setup f1tenth workspace
-    
+* **Never build f1tenth ws in a terminal with sourced `f1tenth/install/source.bash`**, always use a separate window
+```bash
+cd ~/f1tenth
+# Clone external packages' sources using vcstool.
+vcs import --input stack.auto.repos --force
+# Install any required dependencies using rosdep.
+# We have to explicitly ignore
+# - Stage because rosdep cannot detect pure CMake packages.
+# - slam_toolbox and cartographer_ros because they are not needed for the FTG app
+#   and might not be available on all platforms for an easy install using apt.
+rosdep install -i --from-paths src -y --skip-keys="Stage slam_toolbox cartographer_ros"
+# vesc_ackermann's build is failing (uses now-removed deprecated ROS 2 APIs) on rolling (and possibly humble).
+# Because we do not use it now, we can afford to skip is build for now.
+colcon build --symlink-install --mixin compile-commands --packages-ignore vesc_ackermann
+```
+* For multiple terminal windows, you can use [tmux]
+* Everything is already preconfigured, you can use the following command to start/attach to car's tmux session:
+    ```bash
+    tmux-car
+    ```
+* Other useful shortcuts:
+    ```bash
+    s           # source current ros workspace
+    ws-clean    # clean current workspace
+    car-start   # start the car by publishing false to /eStop topic
+    auto start  # start the car by publishing false to /eStop topic
+    car-stop    # stop the car by publishing true to /eStop topic
+    auto stop   # stop the car by publishing true to /eStop topic
+    ```
+
+* For example, you can try running the Follow the Gap:
+    ```bash
+    # change the value of config based on your car
+    ros2 launch auto auto.ftg.launch.py config:=tx2-auto-usa.yaml
+    ```

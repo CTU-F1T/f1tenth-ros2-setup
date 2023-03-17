@@ -1,7 +1,7 @@
 FROM ctu-iig/tx2-ros2-docker:latest
 USER nvidia
 
-RUN sudo apt-get update && sudo apt-get -y upgrade
+RUN sudo apt-get update && sudo apt-get -y upgrade && sudo apt-get install -y htop
 
 # RUN  echo 'alias ranger='"'"'ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'"'"'' >> ~/.bashrc
 # RUN ranger --copy-config=all

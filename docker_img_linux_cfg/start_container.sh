@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
 mkdir -p ~/.tmuxinator
-cp -r ~/f1tenth-ros2-setup/docker_img_linux_cfg/appconfig/tmux ~/.tmuxinator/
+cp -r ~/f1tenth-ros2-setup/docker_img_linux_cfg/appconfig/tmux/* ~/.tmuxinator/
 
 docker run -it -d \
 --network=host \
 --restart always \
--h tx2-ros2-docker \
+-h tx2-ros2 \
 --name tx2-ros2-cfg \
 --device=/dev/tty.imu \
 --device=/dev/tty.vesc \
