@@ -124,3 +124,6 @@ docker exec -it <container-name> bash   # run docker environment (if ssh access 
         Port 2233
     ```
     and then simply run `ssh <choosen-name>`
+
+## 8. Setup f1tenth workspace
+    
