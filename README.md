@@ -35,6 +35,12 @@ sudo usermod -a -G docker nvidia
 sudo reboot
 ```
 
+* Download [f1tenth rewrite](https://github.com/pokusew/f1tenth-rewrite) repo to the car's home and rename it to `f1tenth`
+    ```bash
+    git clone https://github.com/pokusew/f1tenth-rewrite.git
+    mv f1tenth-rewrite f1tenth
+    ````
+
 * You need to build the docker image on the car, so there is no problem with the system version
 * First, clone this git repo to the car and run available scripts
     ```bash
@@ -43,11 +49,6 @@ sudo reboot
     ./build.sh
     ```
 * This will take a while, because we need to install all of ROS 2 Humble packages
-* Download [f1tenth rewrite](https://github.com/pokusew/f1tenth-rewrite) repo to the car's home and rename it to `f1tenth`
-    ```bash
-        git clone https://github.com/pokusew/f1tenth-rewrite.git
-        mv f1tenth-rewrite f1tenth
-    ````
 * After the build, you need to start a docker container
 * **You have to connect all the devices (vesc, imu, teensy) before running the script, otherwise the container won't start**
 * Then just run the start script
@@ -55,7 +56,18 @@ sudo reboot
     ./start_container.sh
     ```
 * Now the docker container should be running
-* **Never remove the container or all your data will be lost**
+* If the start of the container failed or you can't see files in the `f1tenth` folder, you need to remove the container, check your configuration and start it again. So be sure that folder `f1tenth` is correctly mounted (you can see all the files) and that all the devices are connected before developing anything or it will be removed.
+* **Never remove the container after final deployment or all your data will be lost**
+
+### Useful commands for docker
+```bash
+docker ps                       # list running containers
+docker ps -a                    # list all containers
+docker stop <container-name>    # stop running container
+docker rm <container-name>      # remove stopped container
+docker exec -it <container-name> bash   # run docker environment (if ssh access is not working)
+```
+
 
 ## 6. Connect to f1tenth car via ssh
 * Now, when everything should be ready and you should be able to connect to the f1tenth car's docker container via ssh from your personal computer
@@ -71,3 +83,4 @@ sudo reboot
         User nvidia
         Port 2233
     ```
+    and then simply run `ssh <choosen-name>`

@@ -11,6 +11,6 @@ docker run -it -d \
 --device=/dev/tty.imu \
 --device=/dev/tty.vesc \
 --device=/dev/tty.teensy \
--v /home/nvidia/.tmuxinator:/home/nvidia/.tmuxinator \
--v /home/nvidia/f1tenth:/home/nvidia/f1tenth \
+-v $HOME/.tmuxinator:/home/nvidia/.tmuxinator \
+-v $HOME/f1tenth:/home/nvidia/f1tenth \
 ctu-iig/tx2-ros2-docker-cfg:latest
