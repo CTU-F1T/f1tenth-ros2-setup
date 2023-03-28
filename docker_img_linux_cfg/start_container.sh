@@ -8,9 +8,16 @@ docker run -it -d \
 --restart always \
 -h tx2-ros2 \
 --name tx2-ros2-cfg \
---device=/dev/tty.imu \
---device=/dev/tty.vesc \
---device=/dev/tty.teensy \
+--gpus all \
 -v $HOME/.tmuxinator:/home/nvidia/.tmuxinator \
 -v $HOME/f1tenth:/home/nvidia/f1tenth \
+-v /dev:/dev \
+--device-cgroup-rule='c 166:* rmw' \
+-e ROS_DOMAIN_ID=1 \
 ctu-iig/tx2-ros2-docker-cfg:latest
+
+
+
+# --device=/dev/tty.imu \
+# --device=/dev/tty.vesc \
+# --device=/dev/tty.teensy \
