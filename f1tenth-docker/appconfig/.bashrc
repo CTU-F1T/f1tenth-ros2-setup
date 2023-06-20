@@ -118,6 +118,8 @@ fi
 alias ranger='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
 export VISUAL=vim
 export EDITOR=vim
+export PATH=$PATH:/usr/local/cuda-10.2/bin:/usr/local/cuda/bin:/home/nvidia/.local/bin
+export LD_LIBRARY_PATH=/usr/local/cuda-10.2/targets/aarch64-linux/lib:${LD_LIBRARY_PATH}
 
 # colcon - ROS 2 meta-build tool
 # see https://colcon.readthedocs.io/en/released/user/installation.html#quick-directory-changes

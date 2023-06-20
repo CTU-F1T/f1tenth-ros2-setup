@@ -47,7 +47,7 @@ windows:
       # synchronize: after
   - build:
     - 'echo "Use for build of f1tenth ws, but DO NOT source it here"; 
-      history -s colcon build --symlink-install --mixin compile-commands --packages-ignore vesc_ackermann' 
+      history -s colcon build --symlink-install'
 
   - run:
     - source ~/f1tenth/install/setup.bash

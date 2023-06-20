@@ -1,4 +1,5 @@
-# AUTO GO BRRR
+# F1TENTH ROS 2 HUMBLE SETUP
+This repository is a guide, on how to run ROS 2 Humble with CUDA support and PyTorch on NVIDIA Jetson TX2 (l4t:r32.7.2). Firstly we need to flast the NVIDIA and set up all needed devices. But the main contribution of this repository is the guide to running docker with Ubuntu 22.04 LTS, PyTorch with CUDA support and ROS 2 Humble.
 
 ## 1. Flash NVIDIA Jetson TX2 (8GB):
 
@@ -75,22 +76,20 @@ sudo usermod -a -G docker nvidia
 sudo reboot
 ```
 
-* Download [f1tenth rewrite](https://github.com/pokusew/f1tenth-rewrite) repo to the car's home and rename it to `f1tenth`
+* Download [f1tenth rewrite](https://github.com/CTU-F1T/f1tenth-rewrite) repo to the car's home and rename it to `f1tenth`
     ```bash
-    git clone https://github.com/pokusew/f1tenth-rewrite.git
-    mv f1tenth-rewrite f1tenth
+    git clone https://github.com/CTU-F1T/f1tenth-rewrite.git f1tenth
     ````
 
 * You need to build the docker image on the car, so there is no problem with the system version
 * First, clone this git repo to the car and run available scripts
     ```bash
     git clone git@github.com:cihlami1/f1tenth-ros2-setup.git
-    cd f1tenth-ros2-setup/docker_img_linux_cfg
-    ./build.sh
+    cd f1tenth-ros2-setup
+    ./build_image.sh
     ```
 * This will take a while, because we need to install all of ROS 2 Humble packages
 * After the build, you need to start a docker container
-* **You have to connect all the devices (vesc, imu, teensy) before running the script, otherwise the container won't start**
 * Then just run the start script
     ```bash
     ./start_container.sh
@@ -139,7 +138,7 @@ vcs import --input stack.auto.repos --force
 rosdep install -i --from-paths src -y --skip-keys="Stage slam_toolbox cartographer_ros"
 # vesc_ackermann's build is failing (uses now-removed deprecated ROS 2 APIs) on rolling (and possibly humble).
 # Because we do not use it now, we can afford to skip is build for now.
-colcon build --symlink-install --mixin compile-commands --packages-ignore vesc_ackermann
+colcon build --symlink-install --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON --no-warn-unused-cli
 ```
 * For multiple terminal windows, you can use [tmux](https://github.com/tmux/tmux/wiki)
 * Everything is already preconfigured, you can use the following command to start/attach to car's tmux session:
